@@ -1,17 +1,23 @@
 <template>
   <div class="lists">
 
-    <sm-upload
-      :multiple="false"
+    <!-- <sm-upload
+      :multiple="true"
+      mul-type="detail"
       filename="FileContent"
+      width="373px"
+      height="70px"
       >
 
+      <div slot="mul-custom" slot-scope="{uploadList}">
 
-    </sm-upload>
+        <img v-for="item in uploadList" :src="item.url + '?x-oss-process=image/resize,m_fill,h_100,w_100'">
+      </div>
+    </sm-upload> -->
 
 
 
-    <!-- <sm-form ref="smForm" :form="form" :fields="formFields">
+    <sm-form ref="smForm" :form="form" :fields="formFields">
       <Icon slot="password-prefix" type="md-lock" />
       <Icon slot="category_group-prefix" type="md-lock" />
 
@@ -23,7 +29,7 @@
         <span v-else-if="rate > 1 && rate <= 4">中评</span>
         <span v-else-if="rate > 4">好评</span>
       </template>
-    </sm-form> -->
+    </sm-form>
 
     <br>
     <!-- <sm-list ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" @export="exportData">
@@ -56,6 +62,105 @@ export default {
         inline: false,
       },
       formFields: [
+        {
+          type: 'markdown',
+          name: 'markdown',
+          value: "## 这是markdown 测试内容",        // 默认值
+          label: "markdown 笔记",
+          'on-change': function (html, text) {
+            console.log(html)
+            console.log(text)
+          },
+          rule: {
+            required: true,
+            message: 'markdown 不能为空',
+            trigger: 'blur'
+          }
+        },
+        {
+          type: 'editor',
+          name: 'editor',
+          value: "<p>这是测试内容</p>",        // 默认值
+          label: "详情",
+          'on-change': function (html, text) {
+            console.log(html)
+            console.log(text)
+          },
+          rule: {
+            required: true,
+            message: '详情不能为空',
+            trigger: 'blur'
+          }
+        },
+        {
+          type: 'upload',
+          name: 'image',
+          value: "https://img.love.zhaotongye.com/defaults/20191209/IKPaw6cweegkC03sb3OTIs1F4qLUQyQssCCuIaFm.png",        // 默认值
+          label: "上传封面",
+          width: "375px",
+          height: "70px",
+          noEdit: true
+        },
+        {
+          type: 'upload',
+          name: 'image',
+          value: "https://img.love.zhaotongye.com/defaults/20191209/IKPaw6cweegkC03sb3OTIs1F4qLUQyQssCCuIaFm.png",        // 默认值
+          label: "上传封面",
+          width: "375px",
+          height: "70px",
+          noEdit: false,
+          rule: {
+            required: true,
+            message: '请上传封面',
+            trigger: 'blur'
+          }
+        },
+        {
+          type: 'upload-album',
+          name: 'images-album',
+          value: [
+            "https://img.love.zhaotongye.com/defaults/20191209/IKPaw6cweegkC03sb3OTIs1F4qLUQyQssCCuIaFm.png",
+            "https://img.love.zhaotongye.com/defaults/20191209/IKPaw6cweegkC03sb3OTIs1F4qLUQyQssCCuIaFm.png",
+          ],        // 默认值
+          label: "上传相册",
+          noEdit: false,
+          rule: [
+            {
+              required: true,
+              type: 'array',
+              min: 1,
+              message: '请上传详情',
+              trigger: 'change'
+            },{
+              type: 'array',
+              max: 2,
+              message: '最多上传两张图片',
+              trigger: 'change'
+            }
+          ]
+        },
+        {
+          type: 'upload-detail',
+          name: 'images',
+          label: "上传详情",
+          width: "375px",
+          height: "70px",
+          noEdit: false,
+          rule: [
+            {
+              required: true,
+              type: 'array',
+              min: 1,
+              message: '请上传详情',
+              trigger: 'change'
+            },{
+              type: 'array',
+              max: 2,
+              message: '最多上传两张图片',
+              trigger: 'change'
+            }
+          ]
+        },
         {
           type: 'search',
           name: 'keyword',
@@ -360,7 +465,9 @@ export default {
             { "key": 6, "label": "Content 6", "disabled": false }
           ],
           'on-change': (targetKeys, direction, moveKeys) => {
-            this.$refs['smForm'].setTransfer('transfer_route', targetKeys, direction, moveKeys)
+            console.log(targetKeys)
+            console.log(direction)
+            console.log(moveKeys)
           },
           rule: [
             {
@@ -802,6 +909,13 @@ export default {
   },
   mounted () {
     // this.$smUtil.test();
+    setTimeout(() => {
+      // this.formFields[0]['value'] = '> 這是新的内容'
+      // this.$set(this.formFields, 0, this.formFields[0]);
+      //
+      // this.formFields[19]['value'] = [3,4]
+      // this.$set(this.formFields, 19, this.formFields[19]);
+    }, 1000)
   }
 }
 </script>

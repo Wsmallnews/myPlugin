@@ -1,12 +1,25 @@
 <template>
   <div class="my-field">
 
-    form 表单中的 内联 表单
-    上传
-    富文本编辑器
+    <!-- *、form 表单中的 内联 表单
+    *、表单验证，触发事件 trigger（图片，等...）
+    *、根据一个表单的值，隐藏表单 -->
 
 
     <Form ref="formValidate" :inline="form.inline" :model="formVal" :rules="formRule" :label-width="80">
+
+      <FormItem label="DatePicker">
+        <Row>
+          <Col span="11">
+            <DatePicker type="date" placeholder="Select date" ></DatePicker>
+          </Col>
+          <Col span="2" style="text-align: center">-</Col>
+          <Col span="11">
+            <TimePicker type="time" placeholder="Select time" ></TimePicker>
+          </Col>
+        </Row>
+      </FormItem>
+
       <template v-for="field in currentFields">
         <FormItem v-if="field.type == 'text'" :label="field.label" :prop="field.name">
           <Input
@@ -235,7 +248,8 @@
         </FormItem>
 
         <FormItem v-if="field.type == 'checkbox-only'" :label="field.label" :prop="field.name">
-          <Checkbox v-model="formVal[field.name]"
+          <Checkbox
+            v-model="formVal[field.name]"
             :disabled="field.disabled"
             :border="field.border"
             :true-value="1"
@@ -246,7 +260,8 @@
         </FormItem>
 
         <FormItem v-if="field.type == 'switch'" :label="field.label" :prop="field.name">
-          <i-switch v-model="formVal[field.name]"
+          <i-switch
+            v-model="formVal[field.name]"
             :disabled="field.disabled"
             :true-value="1"
             :false-value="0"
@@ -326,7 +341,7 @@
             :titles="field.titles"
             :list-style="field.listStyle"
             :filterable="field.filterable"
-            @on-change="field['on-change']"
+            @on-change="(targetKeys, direction, moveKeys) => {onTransferChange(targetKeys, direction, moveKeys, field)}"
             >
           </Transfer>
         </FormItem>
@@ -437,52 +452,68 @@
           </TimePicker>
         </FormItem>
 
-        <!-- <FormItem label="E-mail" prop="mail">
-          <Input v-model="formValidate.mail" placeholder="Enter your e-mail"></Input>
+        <FormItem v-if="field.type == 'upload'" :label="field.label" :prop="field.name">
+          <sm-upload
+            :ref="field.name + '-upload'"
+            v-model="formVal[field.name]"
+            :multiple="false"
+            :filename="field.filename ? field.filename : 'FileContent'"
+            :upload-url="field.uploadUrl"
+            :data="field.data"
+            :headers="field.headers"
+            :format="field.format"
+            :defaultImgs="field.defaultImgs"
+            :width="field.width"
+            :height="field.height"
+            :handleResult="field.handleResult"
+            :no-edit="field.noEdit ? field.noEdit : false"
+            >
+          </sm-upload>
         </FormItem>
-        <FormItem label="City" prop="city">
-          <Select v-model="formValidate.city" placeholder="Select your city">
-            <Option value="beijing">New York</Option>
-            <Option value="shanghai">London</Option>
-            <Option value="shenzhen">Sydney</Option>
-          </Select>
+
+        <FormItem v-if="field.type == 'upload-album' || field.type == 'upload-detail'" :label="field.label" :prop="field.name">
+          <sm-upload
+            :ref="field.name + '-upload-mul'"
+            v-model="formVal[field.name]"
+            :multiple="true"
+            :mul-type="field.type == 'upload-detail' ? 'detail' : 'album'"
+            :filename="field.filename ? field.filename : 'FileContent'"
+            :upload-url="field.uploadUrl"
+            :data="field.data"
+            :headers="field.headers"
+            :format="field.format"
+            :defaultImgs="field.defaultImgs"
+            :width="field.width"
+            :height="field.height"
+            :handleResult="field.handleResult"
+            :no-edit="field.noEdit ? field.noEdit : false"
+            @on-change="field['on-change']"
+            >
+          </sm-upload>
         </FormItem>
-        <FormItem label="Date">
-          <Row>
-            <Col span="11">
-            <FormItem prop="date">
-              <DatePicker type="date" placeholder="Select date" v-model="formValidate.date"></DatePicker>
-            </FormItem>
-            </Col>
-            <Col span="2" style="text-align: center">-</Col>
-            <Col span="11">
-            <FormItem prop="time">
-              <TimePicker type="time" placeholder="Select time" v-model="formValidate.time"></TimePicker>
-            </FormItem>
-            </Col>
-          </Row>
+
+        <FormItem v-if="field.type == 'editor'" :label="field.label" :prop="field.name">
+          <sm-editor
+            :ref="field.name + '-editor'"
+            v-model="formVal[field.name]"
+            :localCache="false"
+            :width="field.width"
+            :height="field.height"
+            @on-change="field['on-change']"
+            />
         </FormItem>
-        <FormItem label="Gender" prop="gender">
-          <RadioGroup v-model="formValidate.gender">
-            <Radio label="male">Male</Radio>
-            <Radio label="female">Female</Radio>
-          </RadioGroup>
+
+        <FormItem v-if="field.type == 'markdown'" :label="field.label" :prop="field.name">
+          <sm-markdown
+            :ref="field.name + 'markdown'"
+            v-model="formVal[field.name]"
+            :localCache="false"
+            :options="field.options"
+            :width="field.width"
+            :height="field.height"
+            @on-change="field['on-change']"
+            />
         </FormItem>
-        <FormItem label="Hobby" prop="interest">
-          <CheckboxGroup v-model="formValidate.interest">
-            <Checkbox label="Eat"></Checkbox>
-            <Checkbox label="Sleep"></Checkbox>
-            <Checkbox label="Run"></Checkbox>
-            <Checkbox label="Movie"></Checkbox>
-          </CheckboxGroup>
-        </FormItem>
-        <FormItem label="Desc" prop="desc">
-          <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
-        </FormItem>
-        <FormItem>
-          <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
-          <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
-        </FormItem> -->
       </template>
 
       <FormItem>
@@ -619,6 +650,11 @@
         return formRule;
       }
     },
+    watch: {
+      fields () {
+        this.setFormVal();
+      }
+    },
     methods: {
       setFormVal () {             // 初始化表单默认值
         let fields = this.fields;
@@ -679,9 +715,6 @@
 
         return field;
       },
-      setTransfer (field, targetKeys, direction, moveKeys) {
-        this.formVal[field] = targetKeys;
-      },
       isDatePicker (type) {
         const types = ['date', 'daterange', 'datetime', 'datetimerange', 'year', 'month'];
 
@@ -731,6 +764,10 @@
       onDateChange (value, type, field) {   // value 格式化的值，type 日期选择框类型，field 表单名字
         this.formVal[field.name] = value;
         field['on-change'](value);    // 触发父组件回调方法
+      },
+      onTransferChange (targetKeys, direction, moveKeys, field) {
+        this.formVal[field.name] = targetKeys;
+        field['on-change'](targetKeys, direction, moveKeys);    // 触发父组件回调方法
       },
       handleSubmit(name) {
         console.log(this.formVal)

@@ -1,12 +1,16 @@
 import List from './components/list';
 import Form from './components/form';
 import Upload from './components/upload';
+import Editor from './components/editor';
+import Markdown from './components/markdown';
 import Util from './libs/util';
 
 const sm = {
   SmList: List,
   SmForm: Form,
-  SmUpload: Upload
+  SmUpload: Upload,
+  SmEditor: Editor,
+  SmMarkdown: Markdown
 }
 
 

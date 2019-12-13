@@ -1,4 +1,5 @@
 import List from './components/list';
+import Field from './components/field';
 import Form from './components/form';
 import Upload from './components/upload';
 import Editor from './components/editor';
@@ -7,6 +8,7 @@ import Util from './libs/util';
 
 const sm = {
   SmList: List,
+  SmField: Field,
   SmForm: Form,
   SmUpload: Upload,
   SmEditor: Editor,

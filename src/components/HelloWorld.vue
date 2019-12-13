@@ -67,10 +67,52 @@ export default {
           name: 'markdown',
           value: "## 这是markdown 测试内容",        // 默认值
           label: "markdown 笔记",
+          // 'on-change': function (html, text) {
+          //   console.log(html)
+          //   console.log(text)
+          // },
+          required: true
+        },
+        {
+          type: 'editor',
+          name: 'editor',
+          value: "<p>这是测试内容</p>",        // 默认值
+          label: "详情",
+          required: {
+            message: '请认真填写详情信息'
+          }
+        },
+        {
+          type: "switch",
+          name: 'is_charge',
+          label: '开关',
+        },
+        {
+          type: "text",
+          name: 'name',
+          value: 'smallnews',
+          label: '姓名',
+          // showIf: 'is_charge',
+          showFun: (field, formVal) => {
+            return formVal['is_charge'] == 0 ? true : false
+          }
+        },
+        // {
+        //   type: ""
+        // }
+      ],
+
+      formFieldsOld: [
+        {
+          type: 'markdown',
+          name: 'markdown',
+          value: "## 这是markdown 测试内容",        // 默认值
+          label: "markdown 笔记",
           'on-change': function (html, text) {
             console.log(html)
             console.log(text)
           },
+          required: true,
           rule: {
             required: true,
             message: 'markdown 不能为空',
@@ -910,9 +952,9 @@ export default {
   mounted () {
     // this.$smUtil.test();
     setTimeout(() => {
-      // this.formFields[0]['value'] = '> 這是新的内容'
-      // this.$set(this.formFields, 0, this.formFields[0]);
-      //
+      this.formFields[0]['value'] = '> 這是新的内容'
+      this.$set(this.formFields, 0, this.formFields[0]);
+
       // this.formFields[19]['value'] = [3,4]
       // this.$set(this.formFields, 19, this.formFields[19]);
     }, 1000)

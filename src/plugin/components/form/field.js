@@ -1,25 +1,27 @@
 export const defFields = {
+  custom: {
+    type: 'custom',
+    name: 'custom',
+    value: "",        // 默认值
+    label: "自定义"
+  },
+  group: {            // 填充，避免报错
+    type: 'group',
+    name: 'group',
+    value: "",        // 默认值
+    label: "表单组"
+  },
   markdown: {
     type: 'markdown',
     name: 'markdown',
     value: "",        // 默认值
-    label: "笔记",
-    rule: {
-      required: true,
-      message: 'markdown 不能为空',
-      trigger: 'blur'
-    }
+    label: "笔记"
   },
   editor: {
     type: 'editor',
     name: 'editor',
     value: "",        // 默认值
-    label: "详情",
-    rule: {
-      required: true,
-      message: '详情不能为空',
-      trigger: 'blur'
-    }
+    label: "详情"
   },
   upload: {
     type: 'upload',
@@ -28,33 +30,14 @@ export const defFields = {
     label: "上传封面",
     width: "375px",
     height: "70px",
-    noEdit: false,
-    rule: {
-      required: true,
-      message: '请上传封面',
-      trigger: 'blur'
-    }
+    noEdit: false
   },
   'upload-album': {
     type: 'upload-album',
     name: 'images-album',
     value: [],        // 默认值
     label: "上传相册",
-    noEdit: false,
-    rule: [
-      {
-        required: true,
-        type: 'array',
-        min: 1,
-        message: '请上传详情',
-        trigger: 'change'
-      },{
-        type: 'array',
-        max: 9,
-        message: '最多上传九张图片',
-        trigger: 'change'
-      }
-    ]
+    noEdit: false
   },
   'upload-detail': {
     type: 'upload-detail',
@@ -62,21 +45,7 @@ export const defFields = {
     label: "上传详情",
     width: "375px",
     height: "70px",
-    noEdit: false,
-    rule: [
-      {
-        required: true,
-        type: 'array',
-        min: 1,
-        message: '请上传详情',
-        trigger: 'change'
-      },{
-        type: 'array',
-        max: 9,
-        message: '最多上传九张图片',
-        trigger: 'change'
-      }
-    ]
+    noEdit: false
   },
   search: {
     type: 'search',
@@ -87,7 +56,7 @@ export const defFields = {
     "enter-button": true,    // 显示搜索图标，如果没有该选项，则只显示 搜索图标，没有按钮
     "enter-button": "搜索",
     readonly: false,
-    disabled: false,
+    disabled: false
   },
   text: {
     type: 'text',
@@ -99,44 +68,20 @@ export const defFields = {
     readonly: false,
     disabled: false,
     prefix: "ios-contact",
-    suffix: "ios-search",
-    rule: {
-      required: true,
-      message: '名称不能为空',
-      trigger: 'blur'
-    }
+    suffix: "ios-search"
   },
   number: {
     type: 'number',
     name: 'age',
     value: 0,
     label: "",
-    placeholder: "请输入",
-    rule: {
-      required: true,
-      message: '请输入正确的',
-      min: 1,
-      max: 100,
-      trigger: 'blur',
-      type: 'number'
-    }
+    placeholder: "请输入"
   },
   email: {
     type: 'email',
     name: 'email',
     label: "邮箱",
-    placeholder: "请输入邮箱",
-    rule: [{
-        required: true,
-        message: '邮箱不能为空',
-        trigger: 'blur'
-      },
-      {
-        type: 'email',
-        message: '请输入正确的邮箱格式',
-        trigger: 'blur'
-      }
-    ]
+    placeholder: "请输入邮箱"
   },
   password: {
     type: 'password',
@@ -145,27 +90,13 @@ export const defFields = {
     placeholder: "请输入密码",
     prefix: 'md-lock',
     noconfirm: false,    // 不需要确认密码
-    rule: {
-      required: true,
-      message: '请输入正确的密码格式',
-      min: 6,
-      max: 16,
-      trigger: 'blur'
-    }
   },
   password_confirmation: {
     type: 'password_confirmation',
     name: 'password_confirmation',
     label: "确认密码",
     placeholder: "请输入确认密码",
-    prefix: 'md-lock',
-    rule: {
-      required: true,
-      message: '请输入正确的密码格式',
-      min: 6,
-      max: 16,
-      trigger: 'blur'
-    }
+    prefix: 'md-lock'
   },
   textarea: {
     type: 'textarea',
@@ -178,7 +109,7 @@ export const defFields = {
     'show-word-limit': true,
     placeholder: "请输入描述",
     readonly: false,
-    disabled: false,
+    disabled: false
   },
   radio: {
     type: 'radio',
@@ -192,12 +123,7 @@ export const defFields = {
       // {label: "未审核", value: 0, border: true},
       // {label: "已审核", value: 1, border: false},
       // {label: "已驳回", value: -1, border: true}
-    ],
-    rule: {       // 如果没有，rule 不验证
-      required: true,
-      message: '请选择状态',
-      trigger: 'change'
-    }
+    ]
   },
   checkbox: {
     type: 'checkbox',
@@ -208,20 +134,6 @@ export const defFields = {
       // {label: "打球", value: "boll", border: true},
       // {label: "玩游戏", value: "gaming", border: false},
       // {label: "睡觉", value: "sleep", border: true}
-    ],
-    rule: [
-      {
-        required: true,
-        type: 'array',
-        min: 1,
-        message: '请选择兴趣',
-        trigger: 'change'
-      },{
-        type: 'array',
-        max: 999,
-        message: '最多选择 999 个兴趣',
-        trigger: 'change'
-      }
     ]
   },
   'checkbox-only': {
@@ -229,14 +141,7 @@ export const defFields = {
     name: 'is_onsale',
     label: "上架",
     value: 1,
-    disabled: false,
-    rule: {
-      required: true,
-      type: 'number',
-      min: 1,
-      message: '必须选中复选框',
-      trigger: 'change'
-    }
+    disabled: false
   },
   switch: {
     type: 'switch',
@@ -245,14 +150,7 @@ export const defFields = {
     value: 1,
     disabled: false,
     'true-color': "#c71e1e",
-    'false-color': "#8e8787",
-    rule: {
-      required: true,
-      type: 'number',
-      min: 1,
-      message: '必须开启开关',
-      trigger: 'change'
-    }
+    'false-color': "#8e8787"
   },
   select: {
     type: 'select',
@@ -269,12 +167,7 @@ export const defFields = {
       // {label: "打球", value: '1', disabled: false},
       // {label: "打游戏", value: '2', disabled: false},
     ],
-    optionGroups: [],
-    rule: {
-      required: true,
-      message: '请选择分类',
-      trigger: 'change'
-    }
+    optionGroups: []
   },
   'select-mult': {
     type: 'select-mult',
@@ -289,21 +182,7 @@ export const defFields = {
     'max-tag-placeholder': function (num) {
       return '更多 + ' + num;
     },
-    optionGroups: [],
-    rule: [
-      {
-        required: true,
-        type: 'array',
-        min: 1,
-        message: '请选择多选分类',
-        trigger: 'change'
-      },{
-        type: 'array',
-        max: 999,
-        message: '最多选择 999 个分类',
-        trigger: 'change'
-      }
-    ]
+    optionGroups: []
   },
   transfer: {
     type: 'transfer',
@@ -312,21 +191,7 @@ export const defFields = {
     value: [1],
     placeholder: "请选择选择穿梭框",
     filterable: true,
-    data: [],
-    rule: [
-      {
-        required: true,
-        type: 'array',
-        min: 1,
-        message: '请选择',
-        trigger: 'change'
-      },{
-        type: 'array',
-        max: 999,
-        message: '最多选择 999 个',
-        trigger: 'change'
-      }
-    ]
+    data: []
   },
   color: {
     type: 'color',
@@ -338,14 +203,7 @@ export const defFields = {
     alpha: false,
     hue: true,
     recommend: true,
-    colors: [],
-    rule: [
-      {
-        required: true,
-        message: '请选择颜色',
-        trigger: 'change'
-      }
-    ]
+    colors: []
   },
   rate: {
     type: 'rate',
@@ -354,17 +212,7 @@ export const defFields = {
     label: "选择评分",
     disabled: false,
     character: '',
-    icon: '',
-    rule: [
-      {
-        required: true,
-        type: 'number',
-        message: '请选择评分',
-        min: 0.5,
-        max: 5,
-        trigger: 'change'
-      }
-    ]
+    icon: ''
   },
   date: {
     type: 'date',
@@ -383,12 +231,7 @@ export const defFields = {
     //   }
     // },
     'show-week-numbers': false,
-    confirm: false,
-    rule: {
-      required: true,
-      message: '请选择日期',
-      trigger: 'change'
-    }
+    confirm: false
   },
   datetime: {
     type: 'datetime',
@@ -396,12 +239,7 @@ export const defFields = {
     label: "选择时间",
     value: '2019-12-08 00:00:00',
     placeholder: "请选择时间",
-    placement: "bottom-start",
-    rule: {
-      required: true,
-      message: '请选择时间',
-      trigger: 'change'
-    }
+    placement: "bottom-start"
   },
   daterange: {
     type: 'daterange',
@@ -409,21 +247,7 @@ export const defFields = {
     label: "选择日期区间",
     value: [],
     placeholder: "请选择日期区间",
-    clearable: true,
-    rule: [
-      {
-        required: true,
-        type: 'array',
-        min: 2,
-        message: '请选择日期区间',
-        trigger: 'change'
-      },{
-        type: 'array',
-        max: 2,
-        message: '请选择日期区间',
-        trigger: 'change'
-      }
-    ]
+    clearable: true
   },
   datetimerange: {
     type: 'datetimerange',
@@ -434,21 +258,7 @@ export const defFields = {
     clearable: true,
     'on-change': (date) => {
       console.log(date)
-    },
-    rule: [
-      {
-        required: true,
-        type: 'array',
-        min: 2,
-        message: '请选择日期时间区间',
-        trigger: 'change'
-      },{
-        type: 'array',
-        max: 2,
-        message: '请选择日期时间区间',
-        trigger: 'change'
-      }
-    ]
+    }
   },
   time: {
     type: 'time',
@@ -463,12 +273,7 @@ export const defFields = {
     'disabled-seconds': [],
     'hide-disabled-options': false,
     confirm: false,
-    placement: "bottom-start",
-    rule: {
-      required: true,
-      message: '请选择时间',
-      trigger: 'change'
-    }
+    placement: "bottom-start"
   },
   timerange: {
     type: 'timerange',
@@ -476,21 +281,7 @@ export const defFields = {
     label: "选择时间区间",
     value: [],
     placeholder: "请选择时间区间",
-    clearable: true,
-    rule: [
-      {
-        required: true,
-        type: 'array',
-        min: 2,
-        message: '请选择时间区间',
-        trigger: 'change'
-      },{
-        type: 'array',
-        max: 2,
-        message: '请选择时间区间',
-        trigger: 'change'
-      }
-    ]
+    clearable: true
   },
   cascader: {
     type: 'cascader',
@@ -502,26 +293,18 @@ export const defFields = {
     clearable: true,
     // disabled: true,
     "change-on-select": true,
-    data: [],
-    rule: [
-      {
-        required: true,
-        type: 'array',
-        min: 1,
-        message: '请选择路由',
-        trigger: 'change'
-      },{
-        type: 'array',
-        max: 3,
-        message: '最多选择三个路由',
-        trigger: 'change'
-      }
-    ]
+    data: []
   }
 }
 
 
 export const defRules = {
+  custom: {
+    required: true,       // 必填
+  },
+  group: {
+    required: true,       // 填充，避免报错
+  },
   markdown: {
     required: true,
     message: 'markdown 不能为空',

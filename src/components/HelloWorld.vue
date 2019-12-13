@@ -29,6 +29,10 @@
         <span v-else-if="rate > 1 && rate <= 4">中评</span>
         <span v-else-if="rate > 4">好评</span>
       </template>
+
+      <template slot="custom_field-custom" slot-scope="{ value, field }">
+        {{ value }}
+      </template>
     </sm-form>
 
     <br>
@@ -62,31 +66,31 @@ export default {
         inline: false,
       },
       formFields: [
-        {
-          type: 'markdown',
-          name: 'markdown',
-          value: "## 这是markdown 测试内容",        // 默认值
-          label: "markdown 笔记",
-          // 'on-change': function (html, text) {
-          //   console.log(html)
-          //   console.log(text)
-          // },
-          required: true
-        },
-        {
-          type: 'editor',
-          name: 'editor',
-          value: "<p>这是测试内容</p>",        // 默认值
-          label: "详情",
-          required: {
-            message: '请认真填写详情信息'
-          }
-        },
-        {
-          type: "switch",
-          name: 'is_charge',
-          label: '开关',
-        },
+        // {
+        //   type: 'markdown',
+        //   name: 'markdown',
+        //   value: "## 这是markdown 测试内容",        // 默认值
+        //   label: "markdown 笔记",
+        //   // 'on-change': function (html, text) {
+        //   //   console.log(html)
+        //   //   console.log(text)
+        //   // },
+        //   required: true
+        // },
+        // {
+        //   type: 'editor',
+        //   name: 'editor',
+        //   value: "<p>这是测试内容</p>",        // 默认值
+        //   label: "详情",
+        //   required: {
+        //     message: '请认真填写详情信息'
+        //   }
+        // },
+        // {
+        //   type: "switch",
+        //   name: 'is_charge',
+        //   label: '开关',
+        // },
         {
           type: "text",
           name: 'name',
@@ -97,8 +101,34 @@ export default {
             return formVal['is_charge'] == 0 ? true : false
           }
         },
+        {
+          type: "group",
+          name: 'group',
+          label: '内联表单',
+          children: [
+            {
+              type: "switch",
+              name: 'is_charge',
+              label: '开关',
+            },
+            {
+              type: "text",
+              name: 'name',
+              value: 'smallnews',
+              label: '姓名',
+              required: true,
+              // showIf: 'is_charge',
+              showFun: (field, formVal) => {
+                return formVal['is_charge'] == 0 ? true : false
+              }
+            },
+          ]
+        },
         // {
-        //   type: ""
+        //   type: "custom",
+        //   name: 'custom_field',
+        //   value: '自定义',
+        //   label: '自定义字段'
         // }
       ],
 
@@ -952,8 +982,8 @@ export default {
   mounted () {
     // this.$smUtil.test();
     setTimeout(() => {
-      this.formFields[0]['value'] = '> 這是新的内容'
-      this.$set(this.formFields, 0, this.formFields[0]);
+      // this.formFields[0]['value'] = '> 這是新的内容'
+      // this.$set(this.formFields, 0, this.formFields[0]);
 
       // this.formFields[19]['value'] = [3,4]
       // this.$set(this.formFields, 19, this.formFields[19]);

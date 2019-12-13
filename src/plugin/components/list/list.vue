@@ -37,7 +37,7 @@
           </Tooltip>
           <template slot="list">
             <CheckboxGroup v-model="checkedColumns" >
-              <Checkbox v-for="column in setColumns" :label="column.label" >{{ column.title }}</Checkbox>
+              <Checkbox v-for="(column, index) in setColumns" :key="index" :label="column.label" >{{ column.title }}</Checkbox>
             </CheckboxGroup>
           </template>
         </Dropdown>

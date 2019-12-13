@@ -165,7 +165,8 @@
         :type="currentField.group != undefined ? currentField.group.type : null"
         :vertical="currentField.group ? currentField.group.vertical : false"
         >
-          <Radio v-for="radio in currentField.radios"
+          <Radio v-for="(radio, index) in currentField.radios"
+            :key="index"
             :label="radio.value"
             :disabled="radio.disabled"
             :border="radio.border"
@@ -181,7 +182,8 @@
         v-model="currentValue"
         @on-change="currentField['on-change']"
         >
-        <Checkbox v-for="checkbox in currentField.checkboxs"
+        <Checkbox v-for="(checkbox, index) in currentField.checkboxs"
+          :key="index"
           :label="checkbox.value"
           :disabled="checkbox.disabled"
           :border="checkbox.border"
@@ -240,9 +242,10 @@
         @on-change="currentField['on-change']"
         >
         <template v-if="currentField.optionGroups">
-          <OptionGroup v-for="options in currentField.optionGroups" :label="options.label">
+          <OptionGroup v-for="(options, inds) in currentField.optionGroups" :key="inds" :label="options.label">
             <Option
-              v-for="option in options.options"
+              v-for="(option, ind) in options.options"
+              :key="index"
               :value="option.value"
               :label="option.label"
               :disabled="option.disabled"
@@ -257,7 +260,8 @@
         </template>
         <template v-else>
           <Option
-            v-for="option in currentField.options"
+            v-for="(option, ind) in currentField.options"
+            :key="index"
             :value="option.value"
             :label="option.label"
             :disabled="option.disabled"

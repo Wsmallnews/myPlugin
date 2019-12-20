@@ -1,6 +1,7 @@
 <template>
   <div class="lists">
-
+<!-- <Tag type="dot" checkable color="default">标签四</Tag> -->
+<!-- <Tag type="dot" checkable color="primary">标签一</Tag> -->
     <!-- <sm-upload
       :multiple="true"
       mul-type="detail"
@@ -15,9 +16,15 @@
       </div>
     </sm-upload> -->
 
+    <sm-tags
+      ref="smTags"
+      :value="myTags"
+      :tags="tags"
+      >
+    </sm-tags>
 
 
-    <sm-form ref="smForm" :form="form" :fields="formFields">
+    <sm-form ref="smForm" v-model="formVals" :form="form" :fields="formFields">
       <Icon slot="password-prefix" type="md-lock" />
       <Icon slot="category_group-prefix" type="md-lock" />
 
@@ -62,8 +69,20 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
+      tags: [
+        {name: '标签一'},
+        {name: '标签二'},
+        {name: '标签三'},
+        {name: '标签四'},
+      ],
+      myTags: [
+        "标签一", "标签wu"
+      ],
       form: {
         inline: false,
+      },
+      formVals: {
+        name: ''
       },
       formFields: [
         // {
@@ -92,35 +111,81 @@ export default {
         //   label: '开关',
         // },
         {
+          type: 'upload-album',
+          name: 'images-album',
+          value: [
+            "https://img.love.zhaotongye.com/defaults/20191209/IKPaw6cweegkC03sb3OTIs1F4qLUQyQssCCuIaFm.png",
+            "https://img.love.zhaotongye.com/defaults/20191209/IKPaw6cweegkC03sb3OTIs1F4qLUQyQssCCuIaFm.png",
+          ],        // 默认值
+          label: "上传相册",
+          noEdit: false,
+          rule: [
+            {
+              required: true,
+              type: 'array',
+              min: 1,
+              message: '请上传详情',
+              trigger: 'change'
+            },{
+              type: 'array',
+              max: 2,
+              message: '最多上传两张图片',
+              trigger: 'change'
+            }
+          ]
+        },
+        {
+          type: "tags",
+          name: 'mytags',
+          value: [],
+          required: true,
+          tags: [
+            {name: '标签一'},
+            {name: '标签二'},
+            {name: '标签三'},
+            {name: '标签四'},
+            {name: '标签五'},
+            {name: '标签六'},
+            {name: '标签七'},
+            {name: '标签八'},
+          ]
+        },
+        {
           type: "text",
           name: 'name',
-          value: 'smallnews',
+          value: '',
           label: '姓名',
-          // showIf: 'is_charge',
-          showFun: (field, formVal) => {
-            return formVal['is_charge'] == 0 ? true : false
+          required: {
+            message: '请输入姓名'
           }
+        },
+        {
+          type: "switch",
+          name: 'is_charge',
+          label: '开关',
         },
         {
           type: "group",
           name: 'group',
           label: '内联表单',
+          showFun: (field, formVal) => {
+            return formVal['is_charge'] == 0 ? true : false
+          },
           children: [
             {
-              type: "switch",
-              name: 'is_charge',
+              type: "email",
+              name: 'my_email',
               label: '开关',
             },
             {
               type: "text",
-              name: 'name',
-              value: 'smallnews',
-              label: '姓名',
-              required: true,
+              name: 'small_name',
+              value: '',
+              label: '内联姓名',
+              required: {
+                message: '请输入内联姓名'
+              },
               // showIf: 'is_charge',
-              showFun: (field, formVal) => {
-                return formVal['is_charge'] == 0 ? true : false
-              }
             },
           ]
         },
@@ -977,6 +1042,11 @@ export default {
           return item;
         },
       });
+    }
+  },
+  watch: {
+    myTags(val) {
+      console.log(val)
     }
   },
   mounted () {

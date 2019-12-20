@@ -5,31 +5,32 @@ import LocalForage from 'localforage';
 let util = {};
 
 export const extend = function(objFirst, objSecond, mergeArray) {
+  let newObj = JSON.parse(JSON.stringify(objFirst));    // 防止浅拷贝
   if (typeof objSecond === 'object' && !isNaN(objSecond.length)) { // 如果 第二个对象 是数组对象
     if (mergeArray == undefined || mergeArray == null) {
-      objFirst = objSecond; // 直接覆盖
+      newObj = objSecond; // 直接覆盖
     } else {
-      objFirst = objFirst.concat(objSecond);
+      newObj = newObj.concat(objSecond);
     }
   } else {
     for (var s in objSecond) {
-      if (objFirst[s] == undefined || (typeof objFirst[s] != 'object' && typeof objSecond[s] === 'object')) { // 如果 objFrist 不存在, 或者类型不一致 ，直接赋值,
-        objFirst[s] = objSecond[s];
+      if (newObj[s] == undefined || (typeof newObj[s] != 'object' && typeof objSecond[s] === 'object')) { // 如果 objFrist 不存在, 或者类型不一致 ，直接赋值,
+        newObj[s] = objSecond[s];
       } else if (typeof objSecond[s] === 'object' && !isNaN(objSecond[s].length)) { // 如果 是数组对象，直接赋值,默认前面也是数组对象
         if (mergeArray == undefined || mergeArray == null) { // 不合并数组
-          objFirst[s] = objSecond[s]; // 默认直接赋值
+          newObj[s] = objSecond[s]; // 默认直接赋值
         } else {
-          objFirst[s] = objFirst[s].concat(objSecond[s]); // 合并
+          newObj[s] = newObj[s].concat(objSecond[s]); // 合并
         }
       } else if (typeof objSecond[s] === 'object') { // 如果是对象
-        objFirst[s] = util.extend(objFirst[s], objSecond[s], mergeArray);
+        newObj[s] = util.extend(newObj[s], objSecond[s], mergeArray);
       } else { // 直接赋值
-        objFirst[s] = objSecond[s];
+        newObj[s] = objSecond[s];
       }
     }
   }
 
-  return objFirst;
+  return newObj;
 }
 
 util.extend = extend;

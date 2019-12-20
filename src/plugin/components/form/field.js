@@ -29,12 +29,12 @@ export const defFields = {
     value: "",        // 默认值
     label: "上传封面",
     width: "375px",
-    height: "70px",
+    height: "150px",
     noEdit: false
   },
   'upload-album': {
     type: 'upload-album',
-    name: 'images-album',
+    name: 'upload-album',
     value: [],        // 默认值
     label: "上传相册",
     noEdit: false
@@ -44,7 +44,7 @@ export const defFields = {
     name: 'images',
     label: "上传详情",
     width: "375px",
-    height: "70px",
+    height: "150px",
     noEdit: false
   },
   search: {
@@ -60,22 +60,22 @@ export const defFields = {
   },
   text: {
     type: 'text',
-    name: 'name',
+    name: 'text',
     value: "",
-    label: "名称",
+    label: "内容",
     maxlength: 30,
-    placeholder: "请输入名称",
-    readonly: false,
-    disabled: false,
-    prefix: "ios-contact",
-    suffix: "ios-search"
+    placeholder: "请输入内容",
+    // readonly: false,
+    // disabled: false,
+    // prefix: "ios-contact",
+    // suffix: "ios-search"
   },
   number: {
     type: 'number',
-    name: 'age',
+    name: 'number',
     value: 0,
     label: "",
-    placeholder: "请输入"
+    placeholder: "请输入数字"
   },
   email: {
     type: 'email',
@@ -100,7 +100,7 @@ export const defFields = {
   },
   textarea: {
     type: 'textarea',
-    name: 'info',
+    name: 'desc',
     value: "",
     label: "描述",
     rows: 4,
@@ -108,8 +108,8 @@ export const defFields = {
     maxlength: 200,
     'show-word-limit': true,
     placeholder: "请输入描述",
-    readonly: false,
-    disabled: false
+    // readonly: false,
+    // disabled: false
   },
   radio: {
     type: 'radio',
@@ -128,7 +128,7 @@ export const defFields = {
   checkbox: {
     type: 'checkbox',
     name: 'checkbox',
-    label: "兴趣",
+    label: "复选框组",
     value: [],
     checkboxs: [
       // {label: "打球", value: "boll", border: true},
@@ -138,19 +138,19 @@ export const defFields = {
   },
   'checkbox-only': {
     type: 'checkbox-only',
-    name: 'is_onsale',
-    label: "上架",
+    name: 'checkbox-only',
+    label: "复选框",
     value: 1,
-    disabled: false
+    // disabled: false
   },
   switch: {
     type: 'switch',
     name: 'switch',
     label: "开关",
     value: 1,
-    disabled: false,
-    'true-color': "#c71e1e",
-    'false-color': "#8e8787"
+    // disabled: false,
+    // 'true-color': "#c71e1e",
+    // 'false-color': "#8e8787"
   },
   select: {
     type: 'select',
@@ -159,10 +159,10 @@ export const defFields = {
     value: '1',
     placeholder: "请选择分类",
     filterable: true,
-    prefix: 'md-lock',
     'not-found-text': "没有匹配结果",
-    disabled: false,
     clearable: true,
+    // prefix: 'md-lock',
+    // disabled: false,
     options: [
       // {label: "打球", value: '1', disabled: false},
       // {label: "打游戏", value: '2', disabled: false},
@@ -172,7 +172,7 @@ export const defFields = {
   'select-mult': {
     type: 'select-mult',
     name: 'category_mult',
-    label: "分类",
+    label: "多选分类",
     value: [],
     placeholder: "请选择多个分类",
     disabled: false,
@@ -188,7 +188,7 @@ export const defFields = {
     type: 'transfer',
     name: 'transfer_route',
     label: "选择穿梭框",
-    value: [1],
+    value: [],
     placeholder: "请选择选择穿梭框",
     filterable: true,
     data: []
@@ -198,8 +198,8 @@ export const defFields = {
     name: 'pick_color',
     value: "",
     label: "选择颜色",
-    disabled: false,
     editable: true,
+    // disabled: false,
     alpha: false,
     hue: true,
     recommend: true,
@@ -218,13 +218,13 @@ export const defFields = {
     type: 'date',
     name: 'date_picker',
     label: "选择日期",
-    value: '2019-12-02',
+    value: '',
     placeholder: "请选择日期",
     placement: "bottom-start",
     clearable: true,
-    disabled: false,
     editable: true,
     transfer: false,
+    // disabled: false,
     // options: {
     //   disabledDate (date) {
     //     return date && date.valueOf() < Date.now() - 86400000;
@@ -237,7 +237,7 @@ export const defFields = {
     type: 'datetime',
     name: 'datetime_picker',
     label: "选择时间",
-    value: '2019-12-08 00:00:00',
+    value: '',
     placeholder: "请选择时间",
     placement: "bottom-start"
   },
@@ -256,9 +256,6 @@ export const defFields = {
     value: [],
     placeholder: "请选择日期时间区间",
     clearable: true,
-    'on-change': (date) => {
-      console.log(date)
-    }
   },
   time: {
     type: 'time',
@@ -267,7 +264,7 @@ export const defFields = {
     value: '',
     format: 'HH:mm:ss',
     placeholder: "请选择时间",
-    steps: [1, 20],
+    steps: [],
     'disabled-hours': [],
     'disabled-minutes': [],
     'disabled-seconds': [],
@@ -294,7 +291,14 @@ export const defFields = {
     // disabled: true,
     "change-on-select": true,
     data: []
-  }
+  },
+  tags: {
+    type: 'tags',
+    name: 'mytag',
+    value: [],        // 默认值
+    label: "选择标签",
+    tags: []
+  },
 }
 
 
@@ -360,7 +364,7 @@ export const defRules = {
   },
   number: {
     required: true,
-    message: '请输入正确的',
+    message: '请输入正确的数字',
     min: 1,
     max: 100,
     trigger: 'blur',
@@ -545,5 +549,19 @@ export const defRules = {
       message: '最多选择三个路由',
       trigger: 'change'
     }
-  ]
+  ],
+  tags: [
+    {
+      required: true,
+      type: 'array',
+      min: 1,
+      message: '请选择标签',
+      trigger: 'change'
+    },{
+      type: 'array',
+      max: 5,
+      message: '标签最多选择 5 个',
+      trigger: 'change'
+    }
+  ],
 }

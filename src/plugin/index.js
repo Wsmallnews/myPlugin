@@ -4,6 +4,7 @@ import Form from './components/form';
 import Upload from './components/upload';
 import Editor from './components/editor';
 import Markdown from './components/markdown';
+import Tags from './components/tags';
 import Util from './libs/util';
 
 const sm = {
@@ -12,7 +13,8 @@ const sm = {
   SmForm: Form,
   SmUpload: Upload,
   SmEditor: Editor,
-  SmMarkdown: Markdown
+  SmMarkdown: Markdown,
+  SmTags: Tags
 }
 
 

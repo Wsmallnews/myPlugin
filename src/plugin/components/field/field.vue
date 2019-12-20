@@ -449,12 +449,21 @@
 
     <template v-if="currentField.type == 'markdown'">
       <sm-markdown
-        :ref="currentField.name + 'markdown'"
+        :ref="currentField.name + '-markdown'"
         v-model="currentValue"
         :localCache="false"
         :options="currentField.options"
         :width="currentField.width"
         :height="currentField.height"
+        @on-change="currentField['on-change']"
+        />
+    </template>
+
+    <template v-if="currentField.type == 'tags'">
+      <sm-tags
+        :ref="currentField.name + '-tags'"
+        :value="currentValue"
+        :tags="currentField.tags"
         @on-change="currentField['on-change']"
         />
     </template>

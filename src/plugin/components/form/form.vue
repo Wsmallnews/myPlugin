@@ -5,11 +5,11 @@
       <template v-for="(field, index) in currentFields">
 
         <template v-if="field.type == 'group' && field.children && Array.isArray(field.children)">
-          <FormItem v-show="showFormItem(field)" :label="field.label" :prop="field.name">
+          <FormItem v-if="showFormItem(field, index, null)" :label="field.label" :prop="field.name">
             <Row>
-              <template v-for="(child, index) in field.children">
+              <template v-for="(child, ind) in field.children">
                 <Col span="10">
-                  <FormItem v-show="showFormItem(child)" :prop="child.name">
+                  <FormItem v-if="showFormItem(child, index, field)" :prop="child.name">
                     <sm-field
                       v-model="formVal[child.name]"
                       :field="child"
@@ -22,7 +22,7 @@
           </FormItem>
         </template>
         <template v-else>
-          <FormItem v-show="showFormItem(field)" :label="field.label" :prop="field.name">
+          <FormItem v-if="showFormItem(field, index, null)" :label="field.label" :prop="field.name">
             <sm-field
               v-model="formVal[field.name]"
               :field="field"
@@ -94,9 +94,16 @@
   import dateUtil from 'view-design/src/utils/date';
   import {defFields, defRules} from './field'
 
+  let oldFields = [];
+
   export default {
     props: {
       form: {
+        default: function () {
+          return {};
+        }
+      },
+      value: {
         default: function () {
           return {};
         }
@@ -107,13 +114,15 @@
     },
     data() {
       return {
-        formVal: {}
+        curFields: [],    // 留作修改 field 用
+        // oldFields: [],    // 保留配置，切换状态时使用
+        formVal: {},
       }
     },
     computed: {
       currentFields () {
         let newFields = [];
-        let fields = this.fields;
+        let fields = this.curFields;
 
         for (let field of fields) {
           if (field.type == 'group' && field.children && Array.isArray(field.children)) {
@@ -143,19 +152,25 @@
           }
         }
 
-        // console.log(formRule);
         return formRule;
       }
     },
     watch: {
       fields () {
+        this.setCurFields();
+      },
+      value () {
         this.setFormVal();
       }
     },
     methods: {
+      setCurFields () {
+        this.curFields = this.fields
+      },
       setFormVal () {             // 初始化表单默认值
         let fields = this.fields;
         let formVal = {};
+
         for (let field of fields) {
           if (field.type == 'group' && field.children && Array.isArray(field.children)) {
             for (let child of field.children) {
@@ -184,11 +199,13 @@
         return newFields;
       },
       setDefault (field, formVal) {
+        let value = this.value;
         let defaultVal = this.defaultVal(field.type);
+
         if (field.type == 'number') {
           field.value = Number(field.value);
         }
-        formVal[field.name] = field.value ? field.value : defaultVal;
+        formVal[field.name] = value[field.name] ? value[field.name] : (field.value ? field.value : defaultVal);
         if (field.type == 'password' && (field.noconfirm == undefined || field.noconfirm == false)) {
           formVal[field.name + "_confirmation"] = '';
         }
@@ -197,11 +214,11 @@
       },
       setRule (field, formRule) {
         // 判断验证规则，与默认规则合并
-        if (field.required == undefined && field.rule == undefined) {
+        if ((field.required == undefined || !field.required) && field.rule == undefined) {
           return formRule;
         }
 
-        let defRule = (defRules[field.type] != undefined) ? defRules[field.type] : [];
+        let defRule = (defRules[field.type] != undefined) ? JSON.parse(JSON.stringify(defRules[field.type])) : [];
 
         // 完全自定义 rule
         if (field.rule) {
@@ -209,14 +226,14 @@
           return formRule;
         }
 
+        let required = field.required;
         // 完全默认
-        if (typeof field.required == 'boolean') {
+        if (typeof required == 'boolean') {
           formRule[field.name] = defRule;
           return formRule;
         }
 
         // 简写模式，进行合并
-        let required = field.required;
         if (typeof required == 'object') {
           for (var i in required) {
             // 如果是數組
@@ -273,12 +290,18 @@
 
         return defaultVal;
       },
-      showFormItem(field) {
+      showFormItem(field, index, parent) {      // 当前字段 或者当前字段父字段 的下标
+        var isShow = false;
         if (field.showFun) {
-          return field.showFun(field, this.formVal);
+          isShow = field.showFun(field, this.formVal);
         } else {
-          return !field.showIf || (field.showIf && this.formVal[field.showIf]);
+          isShow = !field.showIf || (field.showIf && this.formVal[field.showIf]);
         }
+
+        return isShow;
+      },
+      getValue () {
+        return this.formVal;
       },
       handleSubmit(name) {
         console.log(this.formVal)
@@ -295,6 +318,7 @@
       }
     },
     created () {
+      this.setCurFields();
       this.setFormVal();
     }
   };

@@ -16,12 +16,12 @@
       </div>
     </sm-upload> -->
 
-    <sm-tags
+    <!-- <sm-tags
       ref="smTags"
       :value="myTags"
       :tags="tags"
       >
-    </sm-tags>
+    </sm-tags> -->
 
 
     <sm-form ref="smForm" v-model="formVals" :form="form" :fields="formFields">
@@ -82,7 +82,8 @@ export default {
         inline: false,
       },
       formVals: {
-        name: ''
+        name: '',
+        mytags: []
       },
       formFields: [
         // {
@@ -1052,6 +1053,9 @@ export default {
   mounted () {
     // this.$smUtil.test();
     setTimeout(() => {
+      // this.formVals['mytags'] = [];
+      this.formVals['mytags'].push('标签五');
+
       // this.formFields[0]['value'] = '> 這是新的内容'
       // this.$set(this.formFields, 0, this.formFields[0]);
 

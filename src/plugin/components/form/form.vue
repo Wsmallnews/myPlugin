@@ -8,7 +8,7 @@
           <FormItem v-if="showFormItem(field, index, null)" :label="field.label" :prop="field.name">
             <Row>
               <template v-for="(child, ind) in field.children">
-                <Col span="10">
+                <Col :span="getSpan(field.children.length)">
                   <FormItem v-if="showFormItem(child, index, field)" :prop="child.name">
                     <sm-field
                       v-model="formVal[child.name]"
@@ -17,6 +17,7 @@
                     </sm-field>
                   </FormItem>
                 </Col>
+                <Col v-if="ind < (field.children.length - 1)" span="2">&nbsp;</Col>
               </template>
             </Row>
           </FormItem>
@@ -289,6 +290,26 @@
         }
 
         return defaultVal;
+      },
+      getSpan (length) {
+        switch (length) {
+          case 1:
+            var span = 24;
+            break;
+          case 2:
+            var span = 11;
+            break;
+          case 3:
+            var span = 6;
+            break;
+          case 4:
+            var span = 4;
+            break;
+          default:
+            var span = 4;
+        }
+
+        return span;
       },
       showFormItem(field, index, parent) {      // 当前字段 或者当前字段父字段 的下标
         var isShow = false;

@@ -278,6 +278,7 @@
           case 'switch':    // 同 checkbox-only
             defaultVal = 0;
             break;
+          case 'tags':
           case 'checkbox':
           case 'select-mult':
           case 'transfer':

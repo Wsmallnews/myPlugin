@@ -147,7 +147,6 @@ export const defFields = {
     type: 'switch',
     name: 'switch',
     label: "开关",
-    value: 1,
     // disabled: false,
     // 'true-color': "#c71e1e",
     // 'false-color': "#8e8787"

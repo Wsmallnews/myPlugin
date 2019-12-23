@@ -155,7 +155,6 @@ export const defFields = {
     type: 'select',
     name: 'category',
     label: "分类",
-    value: '1',
     placeholder: "请选择分类",
     filterable: true,
     'not-found-text': "没有匹配结果",

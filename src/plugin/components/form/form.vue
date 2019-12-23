@@ -3,7 +3,6 @@
     <Form ref="formValidate" :inline="form.inline" :model="formVal" :rules="formRule" :label-width="80">
 
       <template v-for="(field, index) in currentFields">
-
         <template v-if="field.type == 'group' && field.children && Array.isArray(field.children)">
           <FormItem v-if="showFormItem(field, index, null)" :label="field.label" :prop="field.name">
             <Row>

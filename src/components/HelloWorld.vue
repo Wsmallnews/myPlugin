@@ -24,7 +24,7 @@
     </sm-tags> -->
 
 
-    <!-- <sm-form ref="smForm" v-model="formVals" :form="form" :fields="formFields">
+    <sm-form ref="smForm" v-model="formVals" :form="form" :fields="formFields">
       <Icon slot="password-prefix" type="md-lock" />
       <Icon slot="category_group-prefix" type="md-lock" />
 
@@ -40,10 +40,10 @@
       <template slot="custom_field-custom" slot-scope="{ value, field }">
         {{ value }}
       </template>
-    </sm-form> -->
+    </sm-form>
 
     <br>
-    <sm-list ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" @export="exportData">
+    <!-- <sm-list ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" @export="exportData">
       <template slot="formItem" >
         <Form-item prop="title">
           <Input type="text" v-model="listConf.searchParams.title" placeholder="搜索文章名称" ></Input>
@@ -60,7 +60,7 @@
       <template slot="expand" slot-scope="{ row, index }">
         <span style="color: #ff00ff">basdfasdf</span>
       </template>
-    </sm-list>
+    </sm-list> -->
   </div>
 </template>
 

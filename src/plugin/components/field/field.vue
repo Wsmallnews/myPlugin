@@ -241,7 +241,7 @@
         :multiple="currentField.type == 'select-mult'"
         @on-change="currentField['on-change']"
         >
-        <template v-if="currentField.optionGroups">
+        <template v-if="currentField.optionGroups && currentField.optionGroups.length">
           <OptionGroup v-for="(options, inds) in currentField.optionGroups" :key="inds" :label="options.label">
             <Option
               v-for="(option, ind) in options.options"
@@ -261,7 +261,7 @@
         <template v-else>
           <Option
             v-for="(option, ind) in currentField.options"
-            :key="index"
+            :key="ind"
             :value="option.value"
             :label="option.label"
             :disabled="option.disabled"

@@ -94,6 +94,8 @@
   import dateUtil from 'view-design/src/utils/date';
   import {defFields, defRules} from './field'
 
+  let oldFields = [];
+
   export default {
     props: {
       form: {
@@ -113,21 +115,14 @@
     data() {
       return {
         curFields: [],    // 留作修改 field 用
+        // oldFields: [],    // 保留配置，切换状态时使用
         formVal: {},
-      }
-    },
-    watch: {
-      value: {
-        deep: true,
-        handler: function (newVal){
-          this.setFormVal();
-        }
       }
     },
     computed: {
       currentFields () {
         let newFields = [];
-        let fields = this.fields;
+        let fields = this.curFields;
 
         for (let field of fields) {
           if (field.type == 'group' && field.children && Array.isArray(field.children)) {
@@ -160,7 +155,18 @@
         return formRule;
       }
     },
+    watch: {
+      fields () {
+        this.setCurFields();
+      },
+      value () {
+        this.setFormVal();
+      }
+    },
     methods: {
+      setCurFields () {
+        this.curFields = this.fields
+      },
       setFormVal () {             // 初始化表单默认值
         let fields = this.fields;
         let formVal = {};
@@ -233,7 +239,9 @@
             // 如果是數組
             if (Array.isArray(defRule)) {
               defRule.filter((rule, index, defRule) => {
-                rule[i] = required[i];
+                if (rule[i] != undefined) {
+                  rule[i] = required[i];
+                }
                 return rule;
               })
 
@@ -242,7 +250,9 @@
 
             // 如果是對象
             if (typeof defRule == 'object') {
-              defRule[i] = required[i];
+              if (defRule[i] != undefined) {
+                defRule[i] = required[i];
+              }
               continue;
             }
           }
@@ -316,7 +326,6 @@
       },
       handleSubmit(name) {
         console.log(this.formVal)
-        console.log(this.formRule)
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.$Message.success('Success!');
@@ -330,6 +339,7 @@
       }
     },
     created () {
+      this.setCurFields();
       this.setFormVal();
     }
   };

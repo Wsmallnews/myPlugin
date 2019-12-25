@@ -86,6 +86,43 @@ export default {
         mytags: []
       },
       formFields: [
+        {
+          type: 'select',
+          name: 'category_group',
+          label: "分类分组",
+          value: 1,
+          placeholder: "请选择分类",
+          filterable: true,
+          prefix: 'md-lock',
+          'not-found-text': "没有匹配结果",
+          disabled: false,
+          clearable: true,
+          optionGroups: [
+            {
+              label: '球类',
+              options: [
+                {label: "篮球", value: 1, disabled: false},
+                {label: "排球", value: 2, disabled: false},
+                {label: "乒乓球", value: 3, disabled: true}
+              ]
+            },
+            {
+              label: '游戏类',
+              options: [
+                {label: "英雄联盟", value: 4, disabled: false},
+                {label: "王者荣耀", value: 5, disabled: false},
+                {label: "吃鸡", value: 6, disabled: true}
+              ]
+            }
+          ],
+          rule: {
+            required: true,
+            type: 'number',
+            min: 1,
+            message: '请选择分类',
+            trigger: 'change'
+          }
+        },
         // {
         //   type: 'markdown',
         //   name: 'markdown',
@@ -111,85 +148,85 @@ export default {
         //   name: 'is_charge',
         //   label: '开关',
         // },
-        {
-          type: 'upload-album',
-          name: 'images-album',
-          value: [
-            "https://img.love.zhaotongye.com/defaults/20191209/IKPaw6cweegkC03sb3OTIs1F4qLUQyQssCCuIaFm.png",
-            "https://img.love.zhaotongye.com/defaults/20191209/IKPaw6cweegkC03sb3OTIs1F4qLUQyQssCCuIaFm.png",
-          ],        // 默认值
-          label: "上传相册",
-          noEdit: false,
-          rule: [
-            {
-              required: true,
-              type: 'array',
-              min: 1,
-              message: '请上传详情',
-              trigger: 'change'
-            },{
-              type: 'array',
-              max: 2,
-              message: '最多上传两张图片',
-              trigger: 'change'
-            }
-          ]
-        },
-        {
-          type: "tags",
-          name: 'mytags',
-          value: [],
-          required: true,
-          tags: [
-            {name: '标签一'},
-            {name: '标签二'},
-            {name: '标签三'},
-            {name: '标签四'},
-            {name: '标签五'},
-            {name: '标签六'},
-            {name: '标签七'},
-            {name: '标签八'},
-          ]
-        },
-        {
-          type: "text",
-          name: 'name',
-          value: '',
-          label: '姓名',
-          required: {
-            message: '请输入姓名'
-          }
-        },
-        {
-          type: "switch",
-          name: 'is_charge',
-          label: '开关',
-        },
-        {
-          type: "group",
-          name: 'group',
-          label: '内联表单',
-          showFun: (field, formVal) => {
-            return formVal['is_charge'] == 0 ? true : false
-          },
-          children: [
-            {
-              type: "email",
-              name: 'my_email',
-              label: '开关',
-            },
-            {
-              type: "text",
-              name: 'small_name',
-              value: '',
-              label: '内联姓名',
-              required: {
-                message: '请输入内联姓名'
-              },
-              // showIf: 'is_charge',
-            },
-          ]
-        },
+        // {
+        //   type: 'upload-album',
+        //   name: 'images-album',
+        //   value: [
+        //     "https://img.love.zhaotongye.com/defaults/20191209/IKPaw6cweegkC03sb3OTIs1F4qLUQyQssCCuIaFm.png",
+        //     "https://img.love.zhaotongye.com/defaults/20191209/IKPaw6cweegkC03sb3OTIs1F4qLUQyQssCCuIaFm.png",
+        //   ],        // 默认值
+        //   label: "上传相册",
+        //   noEdit: false,
+        //   rule: [
+        //     {
+        //       required: true,
+        //       type: 'array',
+        //       min: 1,
+        //       message: '请上传详情',
+        //       trigger: 'change'
+        //     },{
+        //       type: 'array',
+        //       max: 2,
+        //       message: '最多上传两张图片',
+        //       trigger: 'change'
+        //     }
+        //   ]
+        // },
+        // {
+        //   type: "tags",
+        //   name: 'mytags',
+        //   value: [],
+        //   required: true,
+        //   tags: [
+        //     {name: '标签一'},
+        //     {name: '标签二'},
+        //     {name: '标签三'},
+        //     {name: '标签四'},
+        //     {name: '标签五'},
+        //     {name: '标签六'},
+        //     {name: '标签七'},
+        //     {name: '标签八'},
+        //   ]
+        // },
+        // {
+        //   type: "text",
+        //   name: 'name',
+        //   value: '',
+        //   label: '姓名',
+        //   required: {
+        //     message: '请输入姓名'
+        //   }
+        // },
+        // {
+        //   type: "switch",
+        //   name: 'is_charge',
+        //   label: '开关',
+        // },
+        // {
+        //   type: "group",
+        //   name: 'group',
+        //   label: '内联表单',
+        //   showFun: (field, formVal) => {
+        //     return formVal['is_charge'] == 0 ? true : false
+        //   },
+        //   children: [
+        //     {
+        //       type: "email",
+        //       name: 'my_email',
+        //       label: '开关',
+        //     },
+        //     {
+        //       type: "text",
+        //       name: 'small_name',
+        //       value: '',
+        //       label: '内联姓名',
+        //       required: {
+        //         message: '请输入内联姓名'
+        //       },
+        //       // showIf: 'is_charge',
+        //     },
+        //   ]
+        // },
         // {
         //   type: "custom",
         //   name: 'custom_field',

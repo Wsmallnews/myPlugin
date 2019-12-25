@@ -91,7 +91,6 @@
 </template>
 <script>
   import Util from '../../libs/util';
-  import dateUtil from 'view-design/src/utils/date';
   import {defFields, defRules} from './field'
 
   export default {

@@ -19,10 +19,10 @@ export default {
       },
       formValidate: {
         id: 0,
-        name: 'asdfasd',
+        name: '',
         desc: '',
         image: '',
-        tags: ['abc', 'def'],
+        tags: [],
         start_at: '',
         end_at: '',
         join_num: 0,
@@ -332,7 +332,9 @@ export default {
     }
   },
   mounted: function() {
-
+    setTimeout(() => {
+      this.formValidate.tags = ['还是商学'];
+    }, 5000)
   },
   created() {
     var _this = this
@@ -340,7 +342,6 @@ export default {
     _this.getTags();
     // _this.getTeachrs();
 
-    // if (_this.$route.params.id != undefined) {
       // Util.ajax({
       //   url: '/adminapi/business/1',
       //   method: 'get',
@@ -364,7 +365,6 @@ export default {
       //     }
       //   }
       // })
-    // }
   }
 }
 </script>

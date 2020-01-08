@@ -36,14 +36,14 @@ export default {
   },
   watch: {
     value (val) {
-      this.setCurrentValue()
+      this.setCurrentValue();
     }
   },
   methods: {
     setCurrentValue () {
-      for (let i in this.currentValue) {
-        if (!Util.inArray(this.currentValue[i], this.tags, 'name')) {
-          this.currentValue.splice(i, 1)
+      for (let i in this.value) {
+        if (Util.inArray(this.value[i], this.tags, 'name')) {
+          this.currentValue.push(this.value[i])
         }
       }
     },

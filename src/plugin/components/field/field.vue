@@ -464,10 +464,9 @@
         :ref="currentField.name + '-tags'"
         :value="currentValue"
         :tags="currentField.tags"
-        @on-change="currentField['on-change']"
+        @on-change="(value, item) => {onTagsChange(value, item, currentField)}"
         />
     </template>
-
   </div>
 </template>
 <script>
@@ -570,6 +569,10 @@
       onTransferChange (targetKeys, direction, moveKeys, field) {
         this.currentValue = targetKeys;
         field['on-change'](targetKeys, direction, moveKeys);    // 触发父组件回调方法
+      },
+      onTagsChange (value, item, field) {
+        this.currentValue = value;
+        field['on-change'](value, item);    // 触发父组件回调方法
       }
     },
     created () {

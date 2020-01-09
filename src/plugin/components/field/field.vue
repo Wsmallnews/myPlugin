@@ -245,7 +245,7 @@
           <OptionGroup v-for="(options, inds) in currentField.optionGroups" :key="inds" :label="options.label">
             <Option
               v-for="(option, ind) in options.options"
-              :key="index"
+              :key="ind"
               :value="option.value"
               :label="option.label"
               :disabled="option.disabled"

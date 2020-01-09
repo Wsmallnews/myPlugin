@@ -1,6 +1,6 @@
 <template>
   <div class="sm-form">
-    <Form ref="formValidate" :inline="form.inline" :model="formVal" :rules="formRule" :label-width="80">
+    <Form ref="formValidate" :inline="form.inline" :model="formVal" :rules="formRule" :label-width="120">
 
       <template v-for="(field, index) in currentFields">
         <template v-if="field.type == 'group' && field.children && Array.isArray(field.children)">
@@ -77,14 +77,11 @@
             </sm-field>
           </FormItem>
         </template>
-
-
-
       </template>
 
       <FormItem>
-        <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
-        <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
+        <Button type="primary" @click="handleSubmit('formValidate')">保存</Button>
+        <Button @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
       </FormItem>
     </Form>
   </div>
@@ -113,6 +110,7 @@
       return {
         curFields: [],    // 留作修改 field 用
         formVal: {},
+        rules:null
       }
     },
     watch: {
@@ -144,6 +142,7 @@
         return newFields;
       },
       formRule () {     // 验证规则
+        if (this.rules) return this.rules;
         let fields = this.currentFields;
         let formRule = {};
         for (let field of fields) {
@@ -155,7 +154,7 @@
             formRule = this.setRule(field, formRule);
           }
         }
-
+        this.rules = formRule;
         return formRule;
       }
     },
@@ -318,7 +317,8 @@
         console.log(this.formRule)
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.success('Success!');
+            this.$emit('submit', this.formVal)
+            // this.$Message.success('Success!');
           } else {
             this.$Message.error('Fail!');
           }

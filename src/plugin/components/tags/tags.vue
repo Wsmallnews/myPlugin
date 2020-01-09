@@ -18,7 +18,7 @@
 <script>
 import Util from '../../libs/util'
 export default {
-  name: 'Editor',
+  name: 'Tags',
   props: {
     value: {
       type: Array,
@@ -36,14 +36,14 @@ export default {
   },
   watch: {
     value (val) {
-      this.setCurrentValue();
+      this.currentValue = JSON.parse(JSON.stringify(val));
     }
   },
   methods: {
     setCurrentValue () {
-      for (let i in this.value) {
-        if (Util.inArray(this.value[i], this.tags, 'name')) {
-          this.currentValue.push(this.value[i])
+      for (let i in this.currentValue) {
+        if (!Util.inArray(this.currentValue[i], this.tags, 'name')) {
+          this.currentValue.splice(i, 1)
         }
       }
     },
@@ -58,6 +58,7 @@ export default {
       return this.isChecked(item) ? '' : 'border';
     },
     onChange (checked, item) {
+      this.setCurrentValue();
       if (checked) {
         if (!Util.inArray(item.name, this.currentValue)) {
           this.currentValue.push(item.name)
@@ -71,7 +72,7 @@ export default {
     }
   },
   created () {
-    this.setCurrentValue();
+    this.currentValue = this.value
   }
 }
 </script>

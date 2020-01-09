@@ -77,9 +77,6 @@
             </sm-field>
           </FormItem>
         </template>
-
-
-
       </template>
 
       <FormItem>
@@ -91,10 +88,7 @@
 </template>
 <script>
   import Util from '../../libs/util';
-  import dateUtil from 'view-design/src/utils/date';
   import {defFields, defRules} from './field'
-
-  let oldFields = [];
 
   export default {
     props: {
@@ -115,7 +109,6 @@
     data() {
       return {
         curFields: [],    // 留作修改 field 用
-        // oldFields: [],    // 保留配置，切换状态时使用
         formVal: {},
       }
     },
@@ -239,9 +232,7 @@
             // 如果是數組
             if (Array.isArray(defRule)) {
               defRule.filter((rule, index, defRule) => {
-                if (rule[i] != undefined) {
-                  rule[i] = required[i];
-                }
+                rule[i] = required[i];
                 return rule;
               })
 
@@ -250,9 +241,7 @@
 
             // 如果是對象
             if (typeof defRule == 'object') {
-              if (defRule[i] != undefined) {
-                defRule[i] = required[i];
-              }
+              defRule[i] = required[i];
               continue;
             }
           }

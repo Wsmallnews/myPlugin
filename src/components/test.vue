@@ -71,7 +71,7 @@ export default {
           }
         },
         // {
-        //   type: 'datetime',
+        //   type: 'time',
         //   name: 'start_at',
         //   label: "薪商学开始时间",
         //   placeholder: "请选择开始时间",
@@ -333,8 +333,8 @@ export default {
   },
   mounted: function() {
     setTimeout(() => {
-      this.formValidate.tags = ['还是商学'];
-    }, 5000)
+      this.formValidate.tags = ['还是商学', 'aaa'];
+    }, 2000)
   },
   created() {
     var _this = this
@@ -342,29 +342,29 @@ export default {
     _this.getTags();
     // _this.getTeachrs();
 
-      // Util.ajax({
-      //   url: '/adminapi/business/1',
-      //   method: 'get',
-      //   success: function(result) {
-      //     if (result.error == 0) {
-      //       var info = result.result
-      //       setTimeout(() => {
-      //         for (var i in _this.formValidate) {
-      //           if (i == 'tags') {
-      //             _this.formValidate['tags'] = info['tag_arr']
-      //           } else {
-      //             _this.formValidate[i] = info[i]
-      //           }
-      //         }
-      //       }, 3000)
-      //     } else {
-      //       _this.$Notice.error({
-      //         title: '提示',
-      //         desc: result.info
-      //       })
-      //     }
-      //   }
-      // })
+      Util.ajax({
+        url: '/adminapi/business/1',
+        method: 'get',
+        success: function(result) {
+          if (result.error == 0) {
+            var info = result.result
+            setTimeout(() => {
+              for (var i in _this.formValidate) {
+                if (i == 'tags') {
+                  _this.formValidate['tags'] = info['tag_arr']
+                } else {
+                  _this.formValidate[i] = info[i]
+                }
+              }
+            }, 3000)
+          } else {
+            _this.$Notice.error({
+              title: '提示',
+              desc: result.info
+            })
+          }
+        }
+      })
   }
 }
 </script>

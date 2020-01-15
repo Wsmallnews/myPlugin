@@ -79,7 +79,7 @@
       <InputNumber
         v-model="currentValue"
         :min="currentField.min ? currentField.min : 0"
-        :max="currentField.max ? currentField.max : 9999"
+        :max="currentField.max ? currentField.max : 99999999"
         :readonly="currentField.readonly"
         :disabled="currentField.disabled"
         :autofocus="currentField.autofocus"

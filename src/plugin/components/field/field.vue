@@ -78,6 +78,8 @@
     <template v-if="currentField.type == 'number'">
       <InputNumber
         v-model="currentValue"
+        :min="currentField.min ? currentField.min : 0"
+        :max="currentField.max ? currentField.max : 9999"
         :readonly="currentField.readonly"
         :disabled="currentField.disabled"
         :autofocus="currentField.autofocus"
